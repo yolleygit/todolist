@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, accessible todo list application for managing daily tasks efficiently">
+    <title>Todo List - Task Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Skip Navigation Link for Screen Readers -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="app-header" role="banner">
+            <h1 class="app-title">
+                <svg class="app-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Todo list icon">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Todo List
+            </h1>
+            <p class="app-subtitle">Manage your daily tasks efficiently</p>
+        </header>
+
+        <!-- Main Content -->
+        <main id="main-content" class="main-content" role="main">
+            <!-- Task Input Form -->
+            <section class="input-section" aria-labelledby="add-task-heading">
+                <h2 id="add-task-heading" class="visually-hidden">Add New Task</h2>
+                <form id="task-form" class="task-form" novalidate>
+                    <div class="input-group">
+                        <label for="task-input" class="visually-hidden">Enter new task</label>
+                        <input 
+                            type="text" 
+                            id="task-input" 
+                            class="task-input" 
+                            placeholder="What needs to be done?" 
+                            autocomplete="off"
+                            spellcheck="true"
+                            maxlength="500"
+                            aria-describedby="task-input-help task-input-error"
+                            required
+                        >
+                        <button type="submit" class="add-button" aria-label="Add new task">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                                <path d="M12 5v14m7-7H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Add Task
+                        </button>
+                    </div>
+                    <div id="task-input-help" class="input-help">
+                        Press Enter or click Add Task to create a new task (max 500 characters)
+                    </div>
+                    <div id="task-input-error" class="error-message" role="alert" aria-live="polite" aria-atomic="true"></div>
+                </form>
+            </section>
+
+            <!-- Task Filters and Stats -->
+            <section class="controls-section" aria-labelledby="task-controls-heading">
+                <h2 id="task-controls-heading" class="visually-hidden">Task Controls and Statistics</h2>
+                
+                <div class="task-stats" role="status" aria-live="polite">
+                    <span id="task-count" class="stat-item">0 tasks</span>
+                    <span id="completed-count" class="stat-item">0 completed</span>
+                    <span id="pending-count" class="stat-item">0 pending</span>
+                </div>
+
+                <div class="filter-controls" role="group" aria-labelledby="filter-heading">
+                    <h3 id="filter-heading" class="visually-hidden">Filter Tasks</h3>
+                    <button class="filter-btn active" data-filter="all" aria-pressed="true">
+                        All Tasks
+                    </button>
+                    <button class="filter-btn" data-filter="pending" aria-pressed="false">
+                        Pending
+                    </button>
+                    <button class="filter-btn" data-filter="completed" aria-pressed="false">
+                        Completed
+                    </button>
+                </div>
+
+                <div class="action-controls">
+                    <button id="clear-completed" class="secondary-btn" aria-describedby="clear-completed-help">
+                        Clear Completed
+                    </button>
+                    <button id="clear-all" class="danger-btn" aria-describedby="clear-all-help">
+                        Clear All
+                    </button>
+                    <div id="clear-completed-help" class="visually-hidden">Remove all completed tasks from the list</div>
+                    <div id="clear-all-help" class="visually-hidden">Remove all tasks from the list</div>
+                </div>
+            </section>
+
+            <!-- Tasks List -->
+            <section class="tasks-section" aria-labelledby="tasks-heading">
+                <h2 id="tasks-heading" class="visually-hidden">Your Tasks</h2>
+                <ul id="tasks-list" class="tasks-list" role="list" aria-live="polite" aria-label="Task list">
+                    <!-- Tasks will be dynamically inserted here -->
+                </ul>
+                
+                <!-- Empty State -->
+                <div id="empty-state" class="empty-state" role="status" aria-hidden="true">
+                    <svg class="empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Empty list icon">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3 class="empty-title">No tasks yet</h3>
+                    <p class="empty-message">Add your first task to get started organizing your day!</p>
+                </div>
+            </section>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="loading-state" role="status" aria-live="polite" aria-hidden="true">
+                <div class="loading-spinner" aria-label="Loading tasks"></div>
+                <p>Loading your tasks...</p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer" role="contentinfo">
+            <p class="footer-text">
+                Built with accessibility and performance in mind. 
+                <a href="#main-content" class="footer-link">Back to top</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Confirmation Modal Template -->
+    <div id="confirmation-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description" aria-hidden="true">
+        <div class="modal-overlay" aria-hidden="true"></div>
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="modal-title" class="modal-title"></h2>
+                <button class="modal-close" aria-label="Close dialog">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </header>
+            <div class="modal-body">
+                <p id="modal-description" class="modal-description"></p>
+            </div>
+            <footer class="modal-footer">
+                <button id="modal-cancel" class="secondary-btn">Cancel</button>
+                <button id="modal-confirm" class="danger-btn">Confirm</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- JavaScript -->
+    <script src="utils.js"></script>
+    <script src="storage.js"></script>
+    <script src="ui-components.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

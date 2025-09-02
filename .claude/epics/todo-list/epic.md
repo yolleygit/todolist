@@ -1,8 +1,9 @@
 ---
 name: todo-list
-status: backlog
+status: completed
 created: 2025-09-02T15:11:32Z
-progress: 0%
+progress: 100%
+completed: 2025-09-02T15:35:47Z
 prd: .claude/prds/todo-list.md
 github: https://github.com/yolleygit/todolist/issues/1
 updated: 2025-09-02T15:21:47Z
